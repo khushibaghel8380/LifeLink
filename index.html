@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LifeLink - Blood and Organ Donation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>LifeLink</h1>
+    </div>
+    <button class="secondary-btn hidden" id="logoutBtn" type="button">Logout</button>
+  </header>
+
+  <main>
+    <section class="login-page" id="loginPage">
+      <div class="login-intro">
+        <p class="eyebrow">Blood and Organ Donation Platform</p>
+        <h2>Register first, then login to your LifeLink dashboard</h2>
+        <p>
+          Donors, requesters, and hospital doctors must create an account before login.
+          After registration, each user can open only their own role dashboard.
+        </p>
+      </div>
+
+      <div class="auth-panels">
+        <form class="login-card" id="registrationForm">
+          <div class="section-title">
+            <p class="eyebrow">New Registration</p>
+            <h2>Create Account</h2>
+          </div>
+
+          <label>
+            Register As
+            <select id="registerRole" required>
+              <option value="">Choose role</option>
+              <option value="donor">Donor</option>
+              <option value="requester">Requester</option>
+              <option value="hospital">Hospital / Doctor</option>
+            </select>
+          </label>
+
+          <label>
+            Full Name
+            <input type="text" id="registerName" placeholder="Enter full name" required>
+          </label>
+
+          <label>
+            Phone Number
+            <input type="tel" id="registerPhone" placeholder="Enter phone number" required>
+          </label>
+
+          <label>
+            Password
+            <input type="password" id="registerPassword" placeholder="Create password" required>
+          </label>
+
+          <button class="primary-btn" type="submit">Register</button>
+          <p class="helper-text">Only registered users can login to LifeLink.</p>
+        </form>
+
+        <form class="login-card" id="loginForm">
+          <div class="section-title">
+            <p class="eyebrow">Login</p>
+            <h2>Registered User</h2>
+          </div>
+
+          <label>
+            User Role
+            <select id="loginRole" required>
+              <option value="">Choose role</option>
+              <option value="donor">Donor</option>
+              <option value="requester">Requester</option>
+              <option value="hospital">Hospital / Doctor</option>
+            </select>
+          </label>
+
+          <label>
+            Username
+            <input type="text" id="loginName" placeholder="Enter registered name" required>
+          </label>
+
+          <label>
+            Password
+            <input type="password" id="loginPassword" placeholder="Enter password" required>
+          </label>
+
+          <button class="primary-btn" type="submit">Login</button>
+          <p class="helper-text">Login works only after successful registration.</p>
+        </form>
+      </div>
+    </section>
+
+    <section class="dashboard hidden" id="donorDashboard">
+      <div class="dashboard-head">
+        <div>
+          <p class="eyebrow">Donor Dashboard</p>
+          <h2>Welcome, <span class="userName">Donor</span></h2>
+          <p>Submit your blood donation or organ donation details. Hospital can see your record.</p>
+        </div>
+      </div>
+
+      <section class="layout">
+        <form class="form-card" id="donorForm">
+          <div class="section-title">
+            <p class="eyebrow">Blood Donation</p>
+            <h2>Donor Form</h2>
+          </div>
+          <label>
+            Full Name
+            <input type="text" id="donorName" placeholder="Enter donor name" required>
+          </label>
+          <label>
+            Phone Number
+            <input type="tel" id="donorPhone" placeholder="Enter phone number" required>
+          </label>
+          <label>
+            Blood Group
+            <select id="donorBlood" required>
+              <option value="">Select blood group</option>
+              <option>A+</option>
+              <option>A-</option>
+              <option>B+</option>
+              <option>B-</option>
+              <option>AB+</option>
+              <option>AB-</option>
+              <option>O+</option>
+              <option>O-</option>
+            </select>
+          </label>
+          <label>
+            City
+            <input type="text" id="donorCity" placeholder="Enter city" required>
+          </label>
+          <label>
+            Availability
+            <select id="donorAvailable" required>
+              <option value="Available">Available</option>
+              <option value="Not Available">Not Available</option>
+            </select>
+          </label>
+          <button class="primary-btn" type="submit">Submit Blood Donation</button>
+        </form>
+
+        <form class="form-card" id="organForm">
+          <div class="section-title">
+            <p class="eyebrow">Organ Donation</p>
+            <h2>Organ Donation Form</h2>
+          </div>
+          <label>
+            Donor Name
+            <input type="text" id="organName" placeholder="Enter donor name" required>
+          </label>
+          <label>
+            City
+            <input type="text" id="organCity" placeholder="Enter city" required>
+          </label>
+          <label>
+            Organ
+            <select id="organType" required>
+              <option value="">Select organ</option>
+              <option>Kidney</option>
+              <option>Liver</option>
+              <option>Heart</option>
+              <option>Eyes</option>
+              <option>Lungs</option>
+            </select>
+          </label>
+          <button class="primary-btn" type="submit">Submit Organ Donation</button>
+        </form>
+      </section>
+
+      <section class="form-card">
+        <div class="section-title">
+          <p class="eyebrow">My Status</p>
+          <h2>Hospital Appointments</h2>
+        </div>
+        <div class="list" id="donorAppointmentList"></div>
+      </section>
+    </section>
+
+    <section class="dashboard hidden" id="requesterDashboard">
+      <div class="dashboard-head">
+        <div>
+          <p class="eyebrow">Requester Dashboard</p>
+          <h2>Welcome, <span class="userName">Requester</span></h2>
+          <p>Create a blood or organ request. Hospital doctor will review and schedule appointment.</p>
+        </div>
+      </div>
+
+      <section class="layout">
+        <form class="form-card" id="requestForm">
+          <div class="section-title">
+            <p class="eyebrow">Blood Request</p>
+            <h2>Requester Form</h2>
+          </div>
+          <label>
+            Patient Name
+            <input type="text" id="patientName" placeholder="Enter patient name" required>
+          </label>
+          <label>
+            Required Blood Group
+            <select id="requestBlood" required>
+              <option value="">Select blood group</option>
+              <option>A+</option>
+              <option>A-</option>
+              <option>B+</option>
+              <option>B-</option>
+              <option>AB+</option>
+              <option>AB-</option>
+              <option>O+</option>
+              <option>O-</option>
+            </select>
+          </label>
+          <label>
+            Hospital Name
+            <input type="text" id="hospitalName" placeholder="Enter hospital name" required>
+          </label>
+          <label>
+            City
+            <input type="text" id="requestCity" placeholder="Enter city" required>
+          </label>
+          <label>
+            Emergency Level
+            <select id="emergencyLevel" required>
+              <option>Normal</option>
+              <option>Urgent</option>
+              <option>Critical</option>
+            </select>
+          </label>
+          <button class="primary-btn" type="submit">Submit Blood Request</button>
+        </form>
+
+        <form class="form-card" id="organRequestForm">
+          <div class="section-title">
+            <p class="eyebrow">Organ Request</p>
+            <h2>Requester Form</h2>
+          </div>
+          <label>
+            Patient Name
+            <input type="text" id="organPatientName" placeholder="Enter patient name" required>
+          </label>
+          <label>
+            Required Organ
+            <select id="requiredOrgan" required>
+              <option value="">Select organ</option>
+              <option>Kidney</option>
+              <option>Liver</option>
+              <option>Heart</option>
+              <option>Eyes</option>
+              <option>Lungs</option>
+            </select>
+          </label>
+          <label>
+            Hospital Name
+            <input type="text" id="organHospitalName" placeholder="Enter hospital name" required>
+          </label>
+          <label>
+            City
+            <input type="text" id="organRequestCity" placeholder="Enter city" required>
+          </label>
+          <button class="primary-btn" type="submit">Submit Organ Request</button>
+        </form>
+      </section>
+
+      <section class="form-card">
+        <div class="section-title">
+          <p class="eyebrow">My Status</p>
+          <h2>Hospital Appointments</h2>
+        </div>
+        <div class="list" id="requesterAppointmentList"></div>
+      </section>
+    </section>
+
+    <section class="dashboard hidden" id="hospitalDashboard">
+      <div class="dashboard-head">
+        <div>
+          <p class="eyebrow">Hospital / Doctor Dashboard</p>
+          <h2>Welcome, Dr. <span class="userName">Doctor</span></h2>
+          <p>View donors and requests, match them, and declare appointment date and time.</p>
+        </div>
+      </div>
+
+      <section class="stats-grid">
+        <div><span id="totalDonors">0</span><p>Blood Donors</p></div>
+        <div><span id="totalRequests">0</span><p>Total Requests</p></div>
+        <div><span id="totalOrgans">0</span><p>Organ Donors</p></div>
+        <div><span id="totalAppointments">0</span><p>Appointments</p></div>
+      </section>
+
+      <section class="tools-row">
+        <label class="search-box">
+          Search by City, Blood Group, or Organ
+          <input type="search" id="searchInput" placeholder="Example: A+ or Pune or Kidney">
+        </label>
+        <button class="secondary-btn" id="sampleButton" type="button">Load Sample Data</button>
+        <button class="secondary-btn" id="clearData" type="button">Clear Demo Data</button>
+      </section>
+
+      <section class="layout">
+        <form class="form-card" id="appointmentForm">
+          <div class="section-title">
+            <p class="eyebrow">Doctor Action</p>
+            <h2>Declare Appointment</h2>
+          </div>
+          <label>
+            Select Donor
+            <select id="appointmentDonor" required></select>
+          </label>
+          <label>
+            Select Request
+            <select id="appointmentRequest" required></select>
+          </label>
+          <label>
+            Appointment Date
+            <input type="date" id="appointmentDate" required>
+          </label>
+          <label>
+            Appointment Time
+            <input type="time" id="appointmentTime" required>
+          </label>
+          <label>
+            Doctor Name
+            <input type="text" id="doctorName" placeholder="Enter doctor name" required>
+          </label>
+          <button class="primary-btn" type="submit">Declare Appointment</button>
+        </form>
+
+        <div class="form-card">
+          <div class="section-title">
+            <p class="eyebrow">Appointments</p>
+            <h2>Declared Appointments</h2>
+          </div>
+          <div class="list" id="appointmentList"></div>
+        </div>
+      </section>
+
+      <section class="results">
+        <div>
+          <div class="section-title">
+            <p class="eyebrow">Donors</p>
+            <h2>Blood Donors</h2>
+          </div>
+          <div class="list" id="donorList"></div>
+        </div>
+        <div>
+          <div class="section-title">
+            <p class="eyebrow">Requests</p>
+            <h2>Blood Requests</h2>
+          </div>
+          <div class="list" id="requestList"></div>
+        </div>
+        <div>
+          <div class="section-title">
+            <p class="eyebrow">Organ Donors</p>
+            <h2>Organ Pledges</h2>
+          </div>
+          <div class="list" id="organList"></div>
+        </div>
+        <div>
+          <div class="section-title">
+            <p class="eyebrow">Organ Requests</p>
+            <h2>Organ Needs</h2>
+          </div>
+          <div class="list" id="organRequestList"></div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <div class="modal hidden" id="messageModal">
+    <div class="modal-box">
+      <button class="close-btn" id="closeModal" aria-label="Close">x</button>
+      <h2 id="modalTitle">Message</h2>
+      <p id="modalText"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
